@@ -25,7 +25,7 @@ SECRET_KEY = 'bz28yb5yaw37@=!@&3e@e)1a)p1!_zt)wxs5a8*s%qhv21&sjk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inventory',
+    'inventories',
     'import_export',
     'widget_tweaks',
 ]
@@ -120,6 +120,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+import dj_database_url
+db_from_env=dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
+STATIC_URL ='/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
